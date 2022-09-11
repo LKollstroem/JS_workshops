@@ -2,7 +2,15 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+
+
 		<title>Workshop 1</title>
+	</head>
+
+	<body>
+		<h1>Welcome to example page</h1>
+		<p> Lorem ipsum dolorem...   </p>
+
 		<!-- script tag is where Javascript goes to -->
 		<h2>3. Conditionals</h2>
 		<script>
@@ -21,15 +29,49 @@
 		</script>
 		<h2>4. Loops</h2>		
 		<script>	
+			var arr = []; 
+			for (var i=1; i<100; i++) { 
+    			arr.push( Math.random() ); 
+			} 
+			console.log(arr); 
+			document.write(<h2>arr</h2>);
 
 
+		</script>
+		<h2>5. Functions walkthrough</h2>		
+		<script>
 
+			// Returns true if age is over 18, otherwise returns false 
+		function areYouOldEnough(age) { 
+    	if (age < 18){ 
+			return false; 
+			window.alert("Over 18!");
+			document.write("Over 18!");
+    	}else  
+    		return true; 
+			console.log("Not over 18!");
+			document.write("Not over 18!");
+		}
+		alert(areYouOldEnough (5));
+		alert(areYouOldEnough(25));
+		</script>
+		<h2>6. Objects</h2>		
+		<script>
+			// Define an object to hold data for a person 
+			var person = { 
+    		firstName:"John", 
+    		lastName:"Doe", 
+    		age:50, 
+    		eyeColor:"blue" 
+			address: "street",
+			telephone: 555555555
+			}; 
+			console.log(person.age);
 
-
-
-
-
-
+		</script>
+		<h2>Independent exercises 1</h2>
+		<h3>1. Dogs age</h3>		
+		<script>
 
 			for(var i = 0; i < 400; i++) {
 				console.log("This round is " + i);
@@ -44,9 +86,9 @@
 			console.log(dogsAge(12));
 
 
-
-
-
+		</script>
+		<h3>1. Dogs age</h3>		
+		<script>
 
 			var i = 5; var j = 10 
 			var k = 25; var l = Joe; 
@@ -63,18 +105,8 @@
 //Joe is not defined
 
 
-
-
-
-
-
 		</script>
 
-	</head>
-
-	<body>
-		<h1>Welcome to example page</h1>
-		<p> Lorem ipsum dolorem...   </p>
 
 	</body>
 
