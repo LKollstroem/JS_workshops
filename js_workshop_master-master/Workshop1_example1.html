@@ -12,7 +12,7 @@
 		<p> Lorem ipsum dolorem...   </p>
 
 		<!-- script tag is where Javascript goes to -->
-		<h2>3. Conditionals</h2>
+		<h2><hr/>3. Conditionals</h2>
 		<script>
 			var x = 50;
 			var order = "beer";
@@ -27,56 +27,67 @@
 			} else  
 				document.write("It seems you're bit underaged.");
 		</script>
-		<h2>4. Loops</h2>		
+		<h2><hr/>4. Loops</h2>		
 		<script>	
 			var arr = []; 
-			for (var i=1; i<100; i++) { 
-    			arr.push( Math.random() ); 
+			for (var i=0; i<15; i++) { 
+    			arr.push(Math.floor(Math.random() *100)+1); 
+				console.log(arr[i]); 
+				document.write('<li>'+arr[i]+'</li>');
 			} 
-			console.log(arr); 
-			document.write(<h2>arr</h2>);
-
+			console.log(arr);
 
 		</script>
-		<h2>5. Functions walkthrough</h2>		
+		<h2><hr/> 5. Functions walkthrough</h2>		
 		<script>
 
 			// Returns true if age is over 18, otherwise returns false 
 		function areYouOldEnough(age) { 
     	if (age < 18){ 
-			return false; 
 			window.alert("Over 18!");
 			document.write("Over 18!");
+			return false; 
     	}else  
-    		return true; 
 			console.log("Not over 18!");
 			document.write("Not over 18!");
+			return 'TRUE, not over 18!';
 		}
 		alert(areYouOldEnough (5));
 		alert(areYouOldEnough(25));
 		</script>
-		<h2>6. Objects</h2>		
+		<h2><hr/>6. Objects</h2>		
 		<script>
 			// Define an object to hold data for a person 
-			var person = { 
-    		firstName:"John", 
-    		lastName:"Doe", 
-    		age:50, 
-    		eyeColor:"blue" 
-			address: "street",
-			telephone: 555555555
-			}; 
-			console.log(person.age);
+			var people = [
+				{ 
+    				firstName:"John", 
+    				lastName:"Doe", 
+    				age:50, 
+    				eyeColor:"blue", 
+					address: "street",
+					telephone: 555555555,
+					printInfo: function() {return(this.firstName +" " +this.lastName + ", ")}
+				},
+				{ 
+    				firstName:"Peter", 
+    				lastName:"Smith", 
+    				age:32, 
+    				eyeColor:"green", 
+					address: "street2",
+					telephone: 5565544,
+					printInfo: function() {return(this.firstName +" " +this.lastName + ", ")}
+				}
+			]	
+			var text = "<h2>People</h2>";
+			for (i=0; i<people.length; i++){
+				text += people[i].printInfo();
+			}
+			document.write(text);
 
 		</script>
-		<h2>Independent exercises 1</h2>
+		<h2><hr/>Independent exercises 1</h2>
 		<h3>1. Dogs age</h3>		
 		<script>
-
-			for(var i = 0; i < 400; i++) {
-				console.log("This round is " + i);
-			}
-
 			function dogsAge(age) { 
     		if (age == 7){ 
 				return 1; 
@@ -84,27 +95,27 @@
     			return age*7; 
 			} 
 			console.log(dogsAge(12));
-
+			document.write(dogsAge(12));
 
 		</script>
-		<h3>1. Dogs age</h3>		
+		<h3>2. Debugging script</h3>		
 		<script>
 
-			var i = 5; var j = 10 
-			var k = 25; var l = Joe; 
+			var i = 5; 
+			var j = 10; 
+			var k = 25; 
+			var l = "Joe"; 
 			if (i < j) { 
  				console.log("i"); 
 			}else if (j > k) { 
 				console.log("k"); 
- 			} else 
+ 			} else{ 
 				console.log("j"); 
-				var arr = [3, 5, 7]; 
-				for (var i = 0; i <=3; ++i){ 
-					console.log(arr[i]); 
-				}
-//Joe is not defined
-
-
+			}	
+			var arr = [3, 5, 7]; 
+			for (var i = 0; i <3; ++i){ 
+				console.log(arr[i]); 
+			}
 		</script>
 
 
