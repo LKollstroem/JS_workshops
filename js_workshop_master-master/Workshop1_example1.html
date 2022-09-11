@@ -4,7 +4,33 @@
 		<meta charset="UTF-8">
 		<title>Workshop 1</title>
 		<!-- script tag is where Javascript goes to -->
+		<h2>3. Conditionals</h2>
 		<script>
+			var x = 50;
+			var order = "beer";
+			if (x>50){
+				document.write("He's over 50!" );
+			} else if (x <= 50 && x > 30){
+				document.write("<strong>Middle aged man</strong>, who ordered some "+order); 
+			} else if (x <= 20 && x > 18){
+				window.alert("You are a young adult.");
+			} else if (x <= 100 && x > 70){
+				console.log("You shouldn't be drinking.");
+			} else  
+				document.write("It seems you're bit underaged.");
+		</script>
+		<h2>4. Loops</h2>		
+		<script>	
+
+
+
+
+
+
+
+
+
+
 			for(var i = 0; i < 400; i++) {
 				console.log("This round is " + i);
 			}
