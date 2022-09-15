@@ -6,19 +6,126 @@
         <link rel="stylesheet" href="css/styles.css">
         <script>
             <!-- JavaScript goes here -->
+            //Button click, color and date
+            var counter= 0;
+            var element = document.getElementById('Click me');
+            element.addEventListener('click', changeColor)
+            function changeColor(){
+                event.target.style.backgroundColor = 'blue';
+                alert('You clicked me!', currentDate()); 
+                function currentDate(){
+                    var d = new Date();
+                    var day = d.getDate();
+                    var month = d.getMonth()+1;
+                    var year = d.getFullYear();
+                    var current = day+"/"+month+"/"+year;
+                    alert(current);         
+                }            
+            }
+            //Table button
+            function showTable(){
+                var html =`
+        <table id="warehouse" class="display" cellspacing="0" width="100%" border="1">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Total</th>
+                    <th>Warehouse1</th>
+                    <th>Warehouse2</th>  
+                    <th>Warehouse3</th>
+                    <th>Total WH</th>
+                    <th>Room1</th>
+                    <th>FromWH</th>
+                    <th>Room2</th>
+                    <th>FromWH2</th>
+                    <th>Room3</th>
+                    <th>FromWH3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Chair</td>
+                    <td>200</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                </tr>
+                <tr>
+                    <td>Table</td>
+                    <td>50</td>
+                    <td>sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                </tr>
+                <tr>
+                    <td>Tent</td>
+                    <td>20</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                    <td>Sum</td>
+                </tr>
+            </tbody>
+        </table>
+        `;
+        document.write( html ); 
+    }
+    //Geolocation:
+    function geolocation(){
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
+        navigator.geolocation.getCurrentPosition(success, error, options);
+        function success(pos) {
+            var text = 'Your current position is:'+pos.coords.latitude + ' longitude: ' + pos.coords.longitude;
+            console.log(text);
+            document.write(text);
+        }
+        function error() {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+        }  
+    }
+    //Exercise 2:
+    function consoleMessage(){
+        console.log("Stepped over my mouse!")
+
+    }    
         </script>
     </head>
     <body class="ws3">
         <h1>Workshop 3: JavaScript Events</h1>
         <hr />
-        <p>In this exercise we will practice the use of JavaScript events. Use the lecture-material as a reference guide side by side with these exercises. It might also be a good idea to save the lines of code you write during the exercises for later use.</p>
+        <p>In this exercise we will practice the use of JavaScript events. Use the lecture-material as a reference guide side by side with these exercises. 
+            It might also be a good idea to save the lines of code you write during the exercises for later use.</p>
         <hr/>
         <h2>Exercise 1</h2>
         <p>Below you will see three buttons. Edit the source code and add an onClick-events to these buttons.</p>
         <p>
-          <button>Click me</button>
-          <button>Show table</button>
-          <button>Geolocation</button>
+          <button onclick="changeColor()">Click me</button>
+          <button onclick="showTable();">Show Table</button>
+          <button onclick="geolocation()">Geolocation</button>
         </p>
 
         <ol>
@@ -26,47 +133,12 @@
           <li> When you see the button working, add the current date after the text by using the Date() -function.</li>
           <li>The second button should call a function called showTable()". ShowTable function should output a simple HTML-table (below) to the page. Use document.write to print data. Feel free to modify the data on the table.</li>
         </ol>
-        <table id="example" class="display">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Salary</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>$320,800</td>
-                </tr>
-                <tr>
-                    <td>Garrett Winters</td>
-                    <td>Accountant</td>
-                    <td>$170,750</td>
-                </tr>
-                <tr>
-                    <td>Ashton Cox</td>
-                    <td>Junior Technical Author</td>
-                    <td>$86,000</td>
-                </tr>
-                <tr>
-                    <td>Cedric Kelly</td>
-                    <td>Senior Javascript Developer</td>
-                    <td>$433,060</td>
-                </tr>
-                <tr>
-                    <td>Airi Satou</td>
-                    <td>Accountant</td>
-                    <td>$162,700</td>
-                </tr>              
-            </tbody>
-        </table>
+        
         <ol start="4">
             <li>The last button should check Geolocation of the user, and output it to the console and to the page. Note: Some browsers might not allow you to do this. Try different browsers if you get errors.</li>
         </ol>
         <hr/>
-        <h2>Exercise 2</h2>
+        <h2 onmouseover="consoleMessage()" onmouseleave="alert('Bye bye mouse!')">Exercise 2</h2>
         <ul>
             <li>Add an&nbsp;onMouseOver event on the&nbsp;Heading "Exercise 2" of this page.&nbsp;It should&nbsp;fire when the users mouse is moved 
         over&nbsp;it. Output "Stepped over my a mouse!" on the console.</li>
