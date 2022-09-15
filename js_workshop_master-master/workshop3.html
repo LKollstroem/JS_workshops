@@ -6,10 +6,7 @@
         <link rel="stylesheet" href="css/styles.css">
         <script>
             <!-- JavaScript goes here -->
-            //Button click, color and date
-            var counter= 0;
-            var element = document.getElementById('Click me');
-            element.addEventListener('click', changeColor)
+//Button click, color and date
             function changeColor(){
                 event.target.style.backgroundColor = 'blue';
                 alert('You clicked me!', currentDate()); 
@@ -22,7 +19,7 @@
                     alert(current);         
                 }            
             }
-            //Table button
+//Table button
             function showTable(){
                 var html =`
         <table id="warehouse" class="display" cellspacing="0" width="100%" border="1">
@@ -90,7 +87,7 @@
         `;
         document.write( html ); 
     }
-    //Geolocation:
+//Geolocation button:
     function geolocation(){
         var options = {
             enableHighAccuracy: true,
@@ -107,11 +104,32 @@
             console.warn(`ERROR(${err.code}): ${err.message}`);
         }  
     }
-    //Exercise 2:
+//Exercise 2:
     function consoleMessage(){
         console.log("Stepped over my mouse!")
 
     }    
+//Exercise 3:
+var count = 0;
+function counting(){
+    count++;
+    document.getElementById('charcount').innerHTML = count;
+}
+function attention(){
+    var textbox = document.getElementById('textdata');
+    textbox.value='Please fill in the form with proper data.';
+    textbox.style = "background: yellow";
+}
+
+function validate(){
+    var textbox = document.getElementById('textdata');
+    if (textbox.value==''){
+        alert("No text!");
+        return false;
+    }
+}
+
+
         </script>
     </head>
     <body class="ws3">
@@ -152,8 +170,8 @@
           <li>Try to use onkeydown -event on the textarea. It should calculate the number of keypresses and output them on the screen. Could you think other smart ways to use it?</li>
           <li>When the form button is clicked, check if the textarea is empty. Notify the user with appropriate message. HINT: You can access the Textarea using the following command:   <i>document.getElementById("textdata").value</i>. We will study the forms deeper in Workshops 4 and 5.</li>
         </ul>
-        <form>
-            <textarea id="textdata"></textarea><br>
+        <form onsubmit="return validate(this);">
+            <textarea onkeydown="counting();" onfocus="attention();" id="textdata"></textarea><br>
             <span id="charcount"></span>
             <button>Send me</button>
         </form>
