@@ -110,25 +110,30 @@
 
     }    
 //Exercise 3:
-var count = 0;
-function counting(){
-    count++;
-    document.getElementById('charcount').innerHTML = count;
-}
-function attention(){
-    var textbox = document.getElementById('textdata');
-    textbox.value='Please fill in the form with proper data.';
-    textbox.style = "background: yellow";
-}
-
-function validate(){
-    var textbox = document.getElementById('textdata');
-    if (textbox.value==''){
-        alert("No text!");
-        return false;
+    var count = 0;
+    function counting(){
+        count++;
+        document.getElementById('charcount').innerHTML = count;
     }
-}
-
+    function attention(){
+        var textbox = document.getElementById('textdata');
+        textbox.value='Please fill in the form with proper data.';
+        textbox.style = "background: yellow";
+    }
+    function validate(){
+        var textbox = document.getElementById('textdata');
+        if (textbox.value==''){
+            alert("No text!");
+            return false;
+        }
+    }
+//Exercise 4
+    function pointerCoordinates(event){
+                var x = event.clientX;
+                var y = event.clientY;
+                var coords = "X coords: " + x + ", Y coords: " + y;
+                document.getElementById("coordinates").innerHTML = coords;
+            }
 
         </script>
     </head>
@@ -177,7 +182,7 @@ function validate(){
         </form>
         <hr/>
         <h2>Exercise 4</h2>
-        <div id="coordinates"></div>
+        <div onmousemove="pointerCoordinates(event)" id="coordinates"></div>
         <p>Add onMouseMove -event to the DIV-element above. When you move mouse over the DIV (rectangle) the program should output the coordinates of your pointer. Try first outputting to the console using console.log.</p>
         <p> When the program is working, you can try outputting the text on the H2 element with an id "coords" the box</p> 
         <p>HINT: You need to use document.getElementById("coordinates").innerHTML to achieve this.</p>
