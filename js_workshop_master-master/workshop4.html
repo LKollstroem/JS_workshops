@@ -9,16 +9,32 @@
 		<h1>Workshop 4: DOM Scripting</h1>
 		<hr />
 		<p>In this exercise we will practice the art of DOM Scripting with JavaScript. Use the lecture-material as a reference guide side by side these exercises. It might also be a good idea to save the lines of code you write during the exercises for later use. </p>
-
+		<script>
+			function changeHeading(){
+				document.getElementsByTagName('h1')[0].innerHTML = "Modified Heading!";
+			}
+			function secondButton(){
+				document.getElementsByTagName('h2')[1].style.background = "black"; //not working
+				document.getElementsByTagName('h2')[1].style = "font-family: Arial"; 
+				document.getElementsByTagName('h2')[1].style = "color: Yellow";
+				document.getElementsByTagName('h2')[1].style.fontSize = "xx-large";
+			}	
+			function changeThirdButton(){
+				var new = document.createElement('p');
+				new.innerHTML = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit."; 
+				new.setAttribute('id','newData');
+				var newPlacce = document.getElementsByTagName('p')[3];
+				newPlace[3].appendChild(new); //does not work!!!
+			}
+		</script>
 		<hr/>
 		<h2>Exercise 1: Basic  DOM Manipulation</h2>
 		<p>&nbsp;Below you will see three buttons. Edit the source code and add an onClick-events to these buttons. Use Developer Console to find the </p>
 		<p>
 		  <button onclick="changeHeading();">Button 1</button>
-		  <button onclick="secondButton">Button 2</button>
-		  <button onclick="">Button 3</button>
+		  <button onclick="secondButton()">Button 2</button>
+		  <button onclick="changeThirdButton()">Button 3</button>
 		</p>
-
 		<ul>
 			<li>The first button should run a JavaScript-function, which will find the reference to &quot;Workshop 4&quot; heading on this page and change the contents of it to &quot;Modified Heading!&quot;. </li>
 			<li> The second button should run a function, which will modify the style of the &quot;Exercise 2&quot; heading on this page. JavaScript should change at least the font size, style and color and the background color</li>
