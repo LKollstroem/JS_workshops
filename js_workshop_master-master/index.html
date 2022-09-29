@@ -32,7 +32,7 @@
             <br>
             <div style="position:absolute; left:150px; top:133px;" class="no-border" id="onstock-div">
                 <label>
-                <input onopen="showOrigin()" style="backgroundcolor:grey" type="text" name="onstock" id="onstock">
+                <input onopen="showOrigin()" style="background:grey" type="text" name="onstock" id="onstock">
                 <b>On stock</b><br>
                 </label>
             </div>
@@ -84,14 +84,14 @@
                 cell3.innerHTML = salary;
             }
 // Origin total in box: NOT WORKING!!!
-        showOrigin(){
+        function showOrigin(){
             if(document.forms.form1.product.value == "Chair"){
                 input = chairTotal;
             }
         }
  // Product dropdown
 
-        window.onload = function() {
+        window.onload = function(){
         var subjectSel = document.getElementById("warehouseStock");
         for (var x in subjectObject) {
             subjectSel.options[subjectSel.options.length] = new Option(x, x);
