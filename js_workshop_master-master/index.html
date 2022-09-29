@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html style="position:absolute; left:150px; top:133px;" class="no-border" id="onstock-div">
+    <style>
+        body {background-color: powderblue;}
+        h1   {color: rgb(9, 9, 30);
+            font-family: Arial;}
+        html {color: rgb(9, 9, 30); font-family: Arial;} 
+        input, textarea {background-color: #D3D3D3;}
+        select {background-color: #D3D3D3;}
+        button {background-color: #D3D3D3;}
+        
+    </style>
+	<head>
+		<meta charset="UTF-8">
+		<title>Project 1</title>
+	</head>
+	<body>
+		<h1>Stock</h1>
+
+        <label><b>Choose a product, how much you will reserve of it, and which warehouse you are taking it from:</b></label>
+        <br> 
+        <br> 
+        <br>
+        <form name="form1" id="form1" action="/action_page.php">
+                <select name="product" id="product">
+                <option value="" product="selected">Choose product</option>
+                <option value="" chair="selected">Chair</option>
+                <option value="" table="selected">Table</option>
+                <option value="" tent="selected">Tent</option>
+                </select>
+            <br>    
+            <br>
+            <div style="position:absolute; left:150px; top:133px;" class="no-border" id="onstock-div">
+                <label>
+                <input onopen="showOrigin()" style="backgroundcolor:grey" type="text" name="onstock" id="onstock">
+                <b>On stock</b><br>
+                </label>
+            </div>
+            <br>
+            <br>
+            <div class="no-border" id="reserve-div">
+                <label>
+                <b>Reserve amount:</b><br>
+                <input type="text" name="reserve" id="reserve">
+                </label>
+            </div>
+            <br>
+            <br>
+            <form name="form2" id="form2" action="/action_page.php">
+                <select name="warehouse" id="warehouseNo">
+                <option value="" warehouseNo="selected">Choose warehouse</option>
+                <option value="" warehouse1="selected">Warehouse 1</option>
+                <option value="" warehouse2="selected">Warehouse 2</option>
+                <option value="" warehouse3="selected">Warehouse 3</option>
+                </select>
+            <br>
+            <br>
+            <br>
+            <input type="submit" value="Save">
+        </form>
+        <br>
+        <br>
+        <button onclick="showTable();">See stock status</button>
+
+        <script>
+        
+//Just a suggestion on how to move data from cells to fields: 
+            function insertRows(){
+                // Find a <table> element with id="myTable":
+                var table = document.getElementById("data");
+                // Create an empty <tr> element and add it to the bottom position of the table:
+                var row = table.insertRow();
+                // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                // read the values of the fields on page
+                var name = document.getElementById('textfield').value;
+                var position  = document.getElementById('textfield2').value;
+                var salary = document.getElementById('textfield3').value;
+                // Add some text to the new cells:
+                cell1.innerHTML = name;
+                cell2.innerHTML = position;
+                cell3.innerHTML = salary;
+            }
+// Origin total in box: NOT WORKING!!!
+        showOrigin(){
+            if(document.forms.form1.product.value == "Chair"){
+                input = chairTotal;
+            }
+        }
+ // Product dropdown
+
+        window.onload = function() {
+        var subjectSel = document.getElementById("warehouseStock");
+        for (var x in subjectObject) {
+            subjectSel.options[subjectSel.options.length] = new Option(x, x);
+        }
+        subjectSel.onchange = function() {
+            //empty Chapters- and Topics- dropdowns
+            chapterSel.length = 1;
+            topicSel.length = 1;
+            //display correct values
+            for (var y in subjectObject[this.value]) {
+            topicSel.options[topicSel.options.length] = new Option(y, y);
+            }
+        }
+        topicSel.onchange = function() {
+            //empty Chapters dropdown
+            chapterSel.length = 1;
+            //display correct values
+            var z = subjectObject[subjectSel.value][this.value];
+            for (var i = 0; i < z.length; i++) {
+            chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
+            }
+        }
+        }
+
+ // table
+            function showTable(){
+                var html =`
+                <table style="background-color:powderblue" id="warehouse" class="display" cellspacing="0" width="100%" border="1">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Origin</th>
+                            <th>Warehouse1</th>
+                            <th>Warehouse2</th>  
+                            <th>Warehouse3</th>
+                            <th>Total</th>
+                            <th>Room1</th>
+                            <th>From1</th>
+                            <th>Room2</th>
+                            <th>From2</th>
+                            <th>Room3</th>
+                            <th>From3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Chair</td>
+                            <td>200</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                        </tr>
+                        <tr>
+                            <td>Table</td>
+                            <td>50</td>
+                            <td>sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                        </tr>
+                        <tr>
+                            <td>Tent</td>
+                            <td>20</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                            <td>Sum</td>
+                        </tr>
+                    </tbody>
+                </table>
+                `;
+                document.write( html ); 
+            }
+        </script>

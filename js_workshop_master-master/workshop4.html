@@ -10,14 +10,15 @@
 		<hr />
 		<p>In this exercise we will practice the art of DOM Scripting with JavaScript. Use the lecture-material as a reference guide side by side these exercises. It might also be a good idea to save the lines of code you write during the exercises for later use. </p>
 		<script>
+			// Assignment 1 
 			function changeHeading(){
-				document.getElementsByTagName('h1')[0].innerHTML = "Modified Heading!";
+				document.getElementsByTagName('h1')[0].innerHTML = "Modified Heading";
 			}
 			function secondButton(){
-				document.getElementsByTagName('h2')[1].style.background = "black"; //not working
 				document.getElementsByTagName('h2')[1].style = "font-family: Arial"; 
 				document.getElementsByTagName('h2')[1].style = "color: Yellow";
 				document.getElementsByTagName('h2')[1].style.fontSize = "xx-large";
+				document.getElementsByTagName('h2')[1].style = "background: green";
 			}	
 			function changeThirdButton(){
 				var new = document.createElement('p');
@@ -31,7 +32,7 @@
 		<h2>Exercise 1: Basic  DOM Manipulation</h2>
 		<p>&nbsp;Below you will see three buttons. Edit the source code and add an onClick-events to these buttons. Use Developer Console to find the </p>
 		<p>
-		  <button onclick="changeHeading();">Button 1</button>
+		  <button onclick="changeHeading();">Button</button>
 		  <button onclick="secondButton()">Button 2</button>
 		  <button onclick="changeThirdButton()">Button 3</button>
 		</p>
