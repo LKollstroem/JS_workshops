@@ -1,0 +1,598 @@
+<!DOCTYPE HTML>
+<html style="position:absolute; left:150px; top:133px;" class="no-border" id="onstock-div">
+    <style>
+        body {background-color: powderblue;}
+        h1   {color: rgb(9, 9, 30);
+            font-family: Arial;}
+        html {color: rgb(9, 9, 30); font-family: Arial;} 
+        input, textarea {background-color: #D3D3D3;}
+        select {background-color: #D3D3D3;}
+        button {background-color: #D3D3D3;}
+        
+    </style>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>STOCK MANAGEMENT</title>
+	</head>
+	<body>
+		<h1>Stock</h1>
+
+        <label><b>Choose a product, how much you will reserve of it, and which warehouse you are taking it from:</b></label>
+        <br> 
+        <br> 
+        <br>
+        <form name="form1" id="form1">
+                <select name="default" onchange="showOrigin()" id="product">
+                <option value="product">Choose product</option>
+                <option value="chair">Chair</option>
+                <option value="table">Table</option>
+                <option value="tent">Tent</option>
+                </select>
+            <div style="position:absolute; left:150px; top:133px;" class="no-border" id="onstock-div">
+                <label>
+                <input style="background:lightgrey" type="text" name="onstock" id="onstock">
+                On stock<br>
+                </label>
+            </div>
+            <br>
+            <br>
+            <div class="no-border" id="reserve-div">
+                <label>
+                Reserve amount:<br>
+                <input type="text" name="reserve" id="reserve" required>
+                </label>
+            </div>
+            <br>
+            <p>From which warehouse?</p>
+                <select name="warehouse" id="warehouseNo">
+                <option value="default">Choose warehouse</option>
+                <option value="warehouse1">Warehouse 1</option>
+                <option value="warehouse2">Warehouse 2</option>
+                <option value="warehouse3">Warehouse 3</option>
+                </select>
+            <br>
+            <p>Where will it be used?</p>
+                <select name="room" id="roomNo">
+                <option value="default">Choose room</option>
+                <option value="room1">Room 1</option>
+                <option value="room2">Room 2</option>
+                <option value="room3">Room 3</option>
+                </select>
+            <br>
+            <br>
+            <input type="submit" onclick="saveNumbers()" value="Save">
+        </form>
+        <br>
+        <br>
+        <button onclick="showTable()">See stock status</button>
+	    <br>
+        <br>
+	    <table style="background-color:powderblue" id="warehouse" class="display" cellspacing="0" width="110%"  border="1">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Origin</th>
+                    <th>Warehouse1</th>
+                    <th>Warehouse2</th>  
+                    <th>Warehouse3</th>
+                    <th>Total</th>
+                    <th>Room1</th>
+                    <th>Room2</th>
+                    <th>Room3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="chair">Chair</td>
+                    <td id="chairTotal">1200</td>
+                    <td id="chairwh1">400</td>
+                    <td id="chairwh2">400</td>
+                    <td id="chairwh3">400</td>
+                    <td id="chairtotalleft">0</td>
+                    <td id="chairr1">0</td>
+                    <td id="chairr2">0</td>
+                    <td id="chair23">0</td>
+                </tr>
+                <tr>
+                    <td>Table</td>
+                    <td id="tableTotal">500</td>
+                    <td id="tablewh1">200</td>
+                    <td id="tablewh2">200</td>
+                    <td id="tablewh3">100</td>
+                    <td id="tabletotalleft">0</td>
+                    <td id="tabler1">0</td>
+                    <td id="tabler2">0</td>
+                    <td id="tabler3">0</td>
+                </tr>
+                <tr>
+                    <td>Tent</td>
+                    <td id="tentTotal">30</td>
+                    <td id="tentwh1">10</td>
+                    <td id="tentwh2">20</td>
+                    <td id="tentwh3">0</td>
+                    <td id="tenttotalleft">0</td>
+                    <td id="tentr1">0</td>
+                    <td id="tentr2">0</td>
+                    <td id="tentr3">0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script>
+//Save all table items in localstorage
+
+
+// Product dropdown
+
+            window.onload = function(){
+                var subjectSel = document.getElementById("warehouse");
+                for (var x in subjectObject) {
+                    subjectSel.options[subjectSel.options.length] = new Option(x, x);
+                }
+                subjectSel.onchange = function() {
+                //empty Chapters- and Topics- dropdowns
+                    chapterSel.length = 1;
+                    topicSel.length = 1;
+                //display correct values
+                    for (var y in subjectObject[this.value]) {
+                        topicSel.options[topicSel.options.length] = new Option(y, y);
+                    }
+                }
+                topicSel.onchange = function() {
+                //empty Chapters dropdown
+                    chapterSel.length = 1;
+                //display correct values
+                    var z = subjectObject[subjectSel.value][this.value];
+                    for (var i = 0; i < z.length; i++) {
+                        chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
+                    }
+                }
+            }
+
+// table - hide table to be normal, but show table from button.. needs to be configurated.
+            var x = document.getElementById('warehouse'); 
+            x.style.display = "none";
+
+            function showTable(){
+                var warehouse = document.getElementById('warehouse');
+                warehouse.style.display = "table";
+            }
+
+// Available on stock amount when product chosen      
+            function showOrigin(){
+               if(document.getElementById('product').value == 'chair'){
+                   var stock1 = document.getElementById('chairwh1').innerHTML;
+                   var stock2 = document.getElementById('chairwh2').innerHTML;
+                   var stock3 = document.getElementById('chairwh3').innerHTML;
+                   var sum = Number(stock1) + Number(stock2) + Number(stock3);
+                   document.getElementById('onstock').value = sum;
+                }else if(document.getElementById('product').value == 'table'){
+                   var stock1 = document.getElementById('tablewh1').innerHTML;
+                   var stock2 = document.getElementById('tablewh2').innerHTML;
+                   var stock3 = document.getElementById('tablewh3').innerHTML;
+                   var sum = Number(stock1) + Number(stock2) + Number(stock3);
+                   document.getElementById('onstock').value = sum;
+		        }else if(document.getElementById('product').value == 'tent'){
+                   var stock1 = document.getElementById('tentwh1').innerHTML;
+                   var stock2 = document.getElementById('tentwh2').innerHTML;
+                   var stock3 = document.getElementById('tentwh3').innerHTML;
+                   var sum = Number(stock1) + Number(stock2) + Number(stock3);
+                   document.getElementById('onstock').value = sum;
+		        }else{
+		            alert('Please choose a product!');
+                }
+           }   
+
+// Save button - saves changes to table stocks - on stock does not work after this: count total, rooms and warehouses
+            function saveNumbers(){
+                if(document.getElementById('product').value == 'chair'){
+ 			        if(document.getElementById('warehouseNo').value == 'warehouse1'){
+ 				        if(document.getElementById('roomNo').value == 'room1'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('chairwh1').innerHTML;
+		    			    var room1 = document.getElementById('chairr1').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('chairwh1').innerHTML = minus; 
+		    			    document.getElementById('chairr1').innerHTML = plus;
+					        var stock1 = document.getElementById('chairwh1').innerHTML;
+                 			var stock2 = document.getElementById('chairwh2').innerHTML;
+                 			var stock3 = document.getElementById('chairwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('chairtotalleft').innerHTML = sum;
+							localStorage.setItem('chairwh1');
+							localStorage.setItem('chairr1');
+							localStorage.setItem('chairr1');
+                        }else if(document.getElementById('roomNo').value == 'room2'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('chairwh1').innerHTML;
+		    			    var room1 = document.getElementById('chairr2').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('chairwh1').innerHTML = minus; 
+		    			    document.getElementById('chairr2').innerHTML = plus;
+					        var stock1 = document.getElementById('chairwh1').innerHTML;
+                 			var stock2 = document.getElementById('chairwh2').innerHTML;
+                 			var stock3 = document.getElementById('chairwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('chairtotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room3'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('chairwh1').innerHTML;
+		    			    var room1 = document.getElementById('chairr3').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('chairwh1').innerHTML = minus; 
+		    			    document.getElementById('chairr3').innerHTML = plus;
+					        var stock1 = document.getElementById('chairwh1').innerHTML;
+                 			var stock2 = document.getElementById('chairwh2').innerHTML;
+                 			var stock3 = document.getElementById('chairwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('chairtotalleft').innerHTML = sum;
+                        }else{
+                            alert('Please fill in all fields!');
+                        }       
+                    }else if(document.getElementById('warehouseNo').value == 'warehouse2'){
+ 				        if(document.getElementById('roomNo').value == 'room1'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('chairwh2').innerHTML;
+		    			    var room1 = document.getElementById('chairr1').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('chairwh2').innerHTML = minus; 
+		    			    document.getElementById('chairr1').innerHTML = plus;
+					        var stock1 = document.getElementById('chairwh1').innerHTML;
+                 			var stock2 = document.getElementById('chairwh2').innerHTML;
+                 			var stock3 = document.getElementById('chairwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('chairtotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room2'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('chairwh2').innerHTML;
+		    			    var room1 = document.getElementById('chairr2').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('chairwh2').innerHTML = minus; 
+		    			    document.getElementById('chairr2').innerHTML = plus;
+					        var stock1 = document.getElementById('chairwh1').innerHTML;
+                 			var stock2 = document.getElementById('chairwh2').innerHTML;
+                 			var stock3 = document.getElementById('chairwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('chairtotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room3'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('chairwh2').innerHTML;
+		    			    var room1 = document.getElementById('chairr3').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('chairwh2').innerHTML = minus; 
+		    			    document.getElementById('chairr3').innerHTML = plus;
+					        var stock1 = document.getElementById('chairwh1').innerHTML;
+                 			var stock2 = document.getElementById('chairwh2').innerHTML;
+                 			var stock3 = document.getElementById('chairwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('chairtotalleft').innerHTML = sum;
+                        }else{
+                            alert('Please fill in all fields!');
+                        }       
+                    }else if(document.getElementById('warehouseNo').value == 'warehouse3'){
+ 				        if(document.getElementById('roomNo').value == 'room1'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('chairwh3').innerHTML;
+		    			    var room1 = document.getElementById('chairr1').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('chairwh3').innerHTML = minus; 
+		    			    document.getElementById('chairr1').innerHTML = plus;
+					        var stock1 = document.getElementById('chairwh1').innerHTML;
+                 			var stock2 = document.getElementById('chairwh2').innerHTML;
+                 			var stock3 = document.getElementById('chairwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('chairtotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room2'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('chairwh3').innerHTML;
+		    			    var room1 = document.getElementById('chairr2').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('chairwh3').innerHTML = minus; 
+		    			    document.getElementById('chairr2').innerHTML = plus;
+					        var stock1 = document.getElementById('chairwh1').innerHTML;
+                 			var stock2 = document.getElementById('chairwh2').innerHTML;
+                 			var stock3 = document.getElementById('chairwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('chairtotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room3'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('chairwh3').innerHTML;
+		    			    var room1 = document.getElementById('chairr3').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('chairwh3').innerHTML = minus; 
+		    			    document.getElementById('chairr3').innerHTML = plus;
+					        var stock1 = document.getElementById('chairwh1').innerHTML;
+                 			var stock2 = document.getElementById('chairwh2').innerHTML;
+                 			var stock3 = document.getElementById('chairwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('chairtotalleft').innerHTML = sum;
+                        }else{
+                            alert('Please fill in all fields!');
+                        }       
+                    }else{
+                        alert('Please fill in all fields');
+                    }
+                }else if(document.getElementById('product').value == 'table'){
+ 			        if(document.getElementById('warehouseNo').value == 'warehouse1'){
+ 				        if(document.getElementById('roomNo').value == 'room1'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tablewh1').innerHTML;
+		    			    var room1 = document.getElementById('tabler1').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tablewh1').innerHTML = minus; 
+		    			    document.getElementById('tabler1').innerHTML = plus;
+					        var stock1 = document.getElementById('tablewh1').innerHTML;
+                 			var stock2 = document.getElementById('tablewh2').innerHTML;
+                 			var stock3 = document.getElementById('tablewh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tabletotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room2'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tablewh1').innerHTML;
+		    			    var room1 = document.getElementById('tabler2').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tablewh1').innerHTML = minus; 
+		    			    document.getElementById('tabler2').innerHTML = plus;
+					        var stock1 = document.getElementById('tablewh1').innerHTML;
+                 			var stock2 = document.getElementById('tablewh2').innerHTML;
+                 			var stock3 = document.getElementById('tablewh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tabletotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room3'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tablewh1').innerHTML;
+		    			    var room1 = document.getElementById('tabler3').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tablewh1').innerHTML = minus; 
+		    			    document.getElementById('tabler3').innerHTML = plus;
+					        var stock1 = document.getElementById('tablewh1').innerHTML;
+                 			var stock2 = document.getElementById('tablewh2').innerHTML;
+                 			var stock3 = document.getElementById('tablewh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tabletotalleft').innerHTML = sum;
+                        }else{
+                            alert('Please fill in all fields!');
+                        }       
+                    }else if(document.getElementById('warehouseNo').value == 'warehouse2'){
+ 				        if(document.getElementById('roomNo').value == 'room1'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tablewh2').innerHTML;
+		    			    var room1 = document.getElementById('tabler1').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tablewh2').innerHTML = minus; 
+		    			    document.getElementById('tabler1').innerHTML = plus;
+					        var stock1 = document.getElementById('tablewh1').innerHTML;
+                 			var stock2 = document.getElementById('tablewh2').innerHTML;
+                 			var stock3 = document.getElementById('tablewh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tabletotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room2'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tablewh2').innerHTML;
+		    			    var room1 = document.getElementById('tabler2').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tablewh2').innerHTML = minus; 
+		    			    document.getElementById('tabler2').innerHTML = plus;
+					        var stock1 = document.getElementById('tablewh1').innerHTML;
+                 			var stock2 = document.getElementById('tablewh2').innerHTML;
+                 			var stock3 = document.getElementById('tablewh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tabletotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room3'){    
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tablewh2').innerHTML;
+		    			    var room1 = document.getElementById('tabler3').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tablewh2').innerHTML = minus; 
+		    			    document.getElementById('tabler3').innerHTML = plus;
+					        var stock1 = document.getElementById('tablewh1').innerHTML;
+                 			var stock2 = document.getElementById('tablewh2').innerHTML;
+                 			var stock3 = document.getElementById('tablewh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tabletotalleft').innerHTML = sum;
+                        }else{
+                            alert('Please fill in all fields!');
+                        }       
+                    }else if(document.getElementById('warehouseNo').value == 'warehouse3'){
+ 				        if(document.getElementById('roomNo').value == 'room1'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tablewh3').innerHTML;
+		    			    var room1 = document.getElementById('tabler1').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tablewh3').innerHTML = minus; 
+		    			    document.getElementById('tabler1').innerHTML = plus;
+					        var stock1 = document.getElementById('tablewh1').innerHTML;
+                 			var stock2 = document.getElementById('tablerwh2').innerHTML;
+                 			var stock3 = document.getElementById('tablewh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tabletotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room2'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tablewh3').innerHTML;
+		    			    var room1 = document.getElementById('tabler2').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tablewh3').innerHTML = minus; 
+		    			    document.getElementById('tabler2').innerHTML = plus;
+					        var stock1 = document.getElementById('tablewh1').innerHTML;
+                 			var stock2 = document.getElementById('tablewh2').innerHTML;
+                 			var stock3 = document.getElementById('tablewh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tabletotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room3'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tablewh3').innerHTML;
+		    			    var room1 = document.getElementById('tabler3').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tablewh3').innerHTML = minus; 
+		    			    document.getElementById('tabler3').innerHTML = plus;
+					        var stock1 = document.getElementById('tablewh1').innerHTML;
+                 			var stock2 = document.getElementById('tablewh2').innerHTML;
+                 			var stock3 = document.getElementById('tablerwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tabletotalleft').innerHTML = sum;
+                        }else{
+                            alert('Please fill in all fields!');
+                        }       
+                    }else{
+                        alert('Please fill in all fields');
+                    }   
+                }else if(document.getElementById('product').value == 'tent'){
+ 			        if(document.getElementById('warehouseNo').value == 'warehouse1'){
+ 				        if(document.getElementById('roomNo').value == 'room1'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tentwh1').innerHTML;
+		    			    var room1 = document.getElementById('tentr1').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tentwh1').innerHTML = minus; 
+		    			    document.getElementById('tentr1').innerHTML = plus;
+					        var stock1 = document.getElementById('tentwh1').innerHTML;
+                 			var stock2 = document.getElementById('tentwh2').innerHTML;
+                 			var stock3 = document.getElementById('tentwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tenttotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room2'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tentrwh1').innerHTML;
+		    			    var room1 = document.getElementById('tentr2').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tentwh1').innerHTML = minus; 
+		    			    document.getElementById('tentr2').innerHTML = plus;
+					        var stock1 = document.getElementById('tentwh1').innerHTML;
+                 			var stock2 = document.getElementById('tentwh2').innerHTML;
+                 			var stock3 = document.getElementById('tentwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tenttotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room3'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tentwh1').innerHTML;
+		    			    var room1 = document.getElementById('tentr3').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tentwh1').innerHTML = minus; 
+		    			    document.getElementById('tentrr3').innerHTML = plus;
+					        var stock1 = document.getElementById('tentwh1').innerHTML;
+                 			var stock2 = document.getElementById('tentwh2').innerHTML;
+                 			var stock3 = document.getElementById('tentwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tenttotalleft').innerHTML = sum;
+                        }else{
+                            alert('Please fill in all fields!');
+                        }       
+                    }else if(document.getElementById('warehouseNo').value == 'warehouse2'){
+ 				        if(document.getElementById('roomNo').value == 'room1'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tentwh2').innerHTML;
+		    			    var room1 = document.getElementById('tentr1').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tentwh2').innerHTML = minus; 
+		    			    document.getElementById('tentr1').innerHTML = plus;
+					        var stock1 = document.getElementById('tentwh1').innerHTML;
+                 			var stock2 = document.getElementById('tentwh2').innerHTML;
+                 			var stock3 = document.getElementById('tentwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tenttotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room2'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tentwh2').innerHTML;
+		    			    var room1 = document.getElementById('tentr2').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tentwh2').innerHTML = minus; 
+		    			    document.getElementById('tentr2').innerHTML = plus;
+					        var stock1 = document.getElementById('tentwh1').innerHTML;
+                 			var stock2 = document.getElementById('tentwh2').innerHTML;
+                 			var stock3 = document.getElementById('tentwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tenttotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room3'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tentrwh2').innerHTML;
+		    			    var room1 = document.getElementById('tentr3').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tentwh2').innerHTML = minus; 
+		    			    document.getElementById('tentr3').innerHTML = plus;
+					        var stock1 = document.getElementById('tentwh1').innerHTML;
+                 			var stock2 = document.getElementById('tentwh2').innerHTML;
+                 			var stock3 = document.getElementById('tentwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tenttotalleft').innerHTML = sum;
+                        }else{
+                            alert('Please fill in all fields!');
+                        }       
+                    }else if(document.getElementById('warehouseNo').value == 'warehouse3'){
+ 				        if(document.getElementById('roomNo').value == 'room1'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tentwh3').innerHTML;
+		    			    var room1 = document.getElementById('tentr1').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tentwh3').innerHTML = minus; 
+		    			    document.getElementById('tentr1').innerHTML = plus;
+					        var stock1 = document.getElementById('tentwh1').innerHTML;
+                 			var stock2 = document.getElementById('tentwh2').innerHTML;
+                 			var stock3 = document.getElementById('tentwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tenttotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room2'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tentrwh3').innerHTML;
+		    			    var room1 = document.getElementById('tentr2').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tentwh3').innerHTML = minus; 
+		    			    document.getElementById('tentr2').innerHTML = plus;
+					        var stock1 = document.getElementById('tentwh1').innerHTML;
+                 			var stock2 = document.getElementById('tentwh2').innerHTML;
+                 			var stock3 = document.getElementById('tentwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tenttotalleft').innerHTML = sum;
+                        }else if(document.getElementById('roomNo').value == 'room3'){
+                  			var reserve = document.getElementById('reserve').value;
+                   			var stock1 = document.getElementById('tentwh3').innerHTML;
+		    			    var room1 = document.getElementById('tentr3').innerHTML;
+                   			var plus = Number(room1) + Number(reserve);
+ 		    			    var minus = Number(stock1) - Number(reserve);	
+                     		document.getElementById('tentwh3').innerHTML = minus; 
+		    			    document.getElementById('tentr3').innerHTML = plus;
+					        var stock1 = document.getElementById('tentwh1').innerHTML;
+                 			var stock2 = document.getElementById('tentwh2').innerHTML;
+                 			var stock3 = document.getElementById('tentwh3').innerHTML;
+                 			var sum = Number(stock1) + Number(stock2) + Number(stock3);
+ 					        document.getElementById('tenttotalleft').innerHTML = sum;
+                        }else{
+                            alert('Please fill in all fields!');
+                        }       
+                    }else{
+                        alert('Please fill in all fields!');
+                    } 
+                }else{
+                    alert('Please fill in all fields!');
+                }    
+ 	        }
+        </script>
+    </body>
+</html>

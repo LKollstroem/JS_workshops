@@ -5,43 +5,26 @@
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
+
 	<body class="ws4">
 		<h1>Workshop 4: DOM Scripting</h1>
 		<hr />
 		<p>In this exercise we will practice the art of DOM Scripting with JavaScript. Use the lecture-material as a reference guide side by side these exercises. It might also be a good idea to save the lines of code you write during the exercises for later use. </p>
-		<script>
-			// Assignment 1 
-			function changeHeading(){
-				document.getElementsByTagName('h1')[0].innerHTML = "Modified Heading";
-			}
-			function secondButton(){
-				document.getElementsByTagName('h2')[1].style = "font-family: Arial"; 
-				document.getElementsByTagName('h2')[1].style = "color: Yellow";
-				document.getElementsByTagName('h2')[1].style.fontSize = "xx-large";
-				document.getElementsByTagName('h2')[1].style = "background: green";
-			}	
-			function changeThirdButton(){
-				var new = document.createElement('p');
-				new.innerHTML = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit."; 
-				new.setAttribute('id','newData');
-				var newPlacce = document.getElementsByTagName('p')[3];
-				newPlace[3].appendChild(new); //does not work!!!
-			}
-		</script>
+		
 		<hr/>
 		<h2>Exercise 1: Basic  DOM Manipulation</h2>
 		<p>&nbsp;Below you will see three buttons. Edit the source code and add an onClick-events to these buttons. Use Developer Console to find the </p>
 		<p>
-		  <button onclick="changeHeading();">Button</button>
+		  <button onclick="changeHeading()">Button</button>
 		  <button onclick="secondButton()">Button 2</button>
-		  <button onclick="changeThirdButton()">Button 3</button>
+		  <button onclick="thirdButton()">Button 3</button>
 		</p>
 		<ul>
 			<li>The first button should run a JavaScript-function, which will find the reference to &quot;Workshop 4&quot; heading on this page and change the contents of it to &quot;Modified Heading!&quot;. </li>
 			<li> The second button should run a function, which will modify the style of the &quot;Exercise 2&quot; heading on this page. JavaScript should change at least the font size, style and color and the background color</li>
 			<li>The third button should append the following text paragraph after the <strong>4th paragraph tag &lt;p&gt;</strong> on the page (without overwriting the current content). Change the background of the entire page as well. Note: The Lorem ipsum text should be in italics. It should also add a logo image of some sort after the text.<br>
 			<br>
-			<strong id="lorem"><em>&quot;Lorem ipsum</em></strong><em> dolor sit amet, consectetuer   adipiscing elit. Sed posuere interdum sem. Quisque ligula eros   ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam   vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget   velit. &quot;</em></li>
+			<strong id="lorem"><em>Lorem ipsum</em></strong><em> dolor sit amet, consectetuer   adipiscing elit. Sed posuere interdum sem. Quisque ligula eros   ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam   vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget   velit. </em></li>
 		</ul>
 		<hr/>
 		<h2>Exercise 2: DOM Traversing using ID's and classes</h2>
@@ -58,7 +41,7 @@
 			</label>
 			<br>
 			<label>
-				<input type="checkbox" name="CheckboxGroup1" value="3" id="CheckboxGroup1_2"> 
+				<input onchange="surprise()" type="checkbox" name="CheckboxGroup1" value="3" id="CheckboxGroup1_2"> 
 				<span id="surpise">Surprise</span>
 			</label>
 		</p>
@@ -70,6 +53,7 @@
 		<div id="me" class="red-box"></div>
 		<p>&nbsp;</p>
 		<hr/>
+
 		<h2>Exercise 3: Images and pulldowns</h2>
 			<ul>
 				<li>Write a JavaScript function, which will fire when the pulldown menu item is changed. Show the users choice using alert -box.</li>
@@ -77,7 +61,7 @@
 				<li>When you have accomplished the above, change the image (id=&quot;carimage&quot;) below based on the users choice on the pulldown menu below. Find appropriate images from the web.
 			</ul>
 		  <p>Select a new car from the list.</p>
-		  <select name="mySelect" id="mySelect" onchange="">
+		  <select name="mySelect" id="mySelect" onchange="carfunction()">
 			<option value="BMW">BMW         
 			<option value="Audi">Audi
 			<option value="Mercedes">Mercedes
@@ -85,7 +69,7 @@
 		  </select>
 		  <br>
 		  <br>
-		<img alt="" onmouseover="" onmouseout="" style="left: 0px; opacity: 1;" src="http://cdn.bmwblog.com/wp-content/uploads/2015/11/BMW-2-Series-Gran-Coupe-Rendering.jpg" width="400" id="carimage"/>
+		<img onmouseover="showBorder()" onmouseout="hideBorder()" style="left: 0px; opacity: 1;" src="https://imgur.com/RzvbKYU.jpg" width="400" id="carimage" alt="" />
 		<hr/>
 		<h2>Exercise 4: Moving things around</h2>
 		<ul>
@@ -93,8 +77,10 @@
 			<p class="surprise">You can do neat things by editing CSS-rules via  JavaScript. See the examples in lecture slides. Then try these:</p>
 			<ol>
 			  <li><button onclick="changePosition()">Move!</button>Select the div with an id &quot;carimage&quot; and move it 200px left and 500px down</li>
-			  <li><button onclick="setInterval(function(){doMove();},1000); ">Animate</button> Write a  funtion doMove() which  will move the image across the screen, or even better: back and forth on  the screen. The Interval required has already been added to the onclick -event of the list item.</li>
-			  <li><button onclick="setInterval(function(){fadeOut();},250);">Fade out!</button> Wite  a function fadeOut() which will slowly decrease the opacity of the image from 1.0 to  0 making it fade out. The Interval required has already been added to the onclick -event of the list item</li>
+			  <li><button onclick="setInterval(function(){doMove();},1000); ">Animate</button> Write a  funtion doMove() which  will move the image across 
+				the screen, or even better: back and forth on  the screen. The Interval required has already been added to the onclick -event of the list item.</li>
+			  <li><button onclick="setInterval(function(){doFadeOut();},250);">Fade out!</button> Write  a function fadeOut() which will slowly decrease the 
+				opacity of the image from 1.0 to  0 making it fade out. The Interval required has already been added to the onclick -event of the list item</li>
 			  <li><button onclick="remove()">Disappear! </button>Finally, write JavaScript which will remove the image from the page</li>
 			</ol>
 		  </li>
@@ -165,6 +151,110 @@
 			</li>
 			<li dir="ltr">How would you replace the contents only on the ones with the word &lsquo;Select&rsquo; in them?</li>
 		</ul>
+		<script>
+// Assignment 1 
+			function changeHeading(){
+				document.getElementsByTagName('h1')[0].innerHTML = "Modified Heading";
+			}
+			function secondButton(){
+				document.getElementsByTagName('h2')[1].style = "font-family: Arial"; 
+				document.getElementsByTagName('h2')[1].style = "color: Yellow";
+				document.getElementsByTagName('h2')[1].style.fontSize = "xx-large";
+				document.getElementsByTagName('h2')[1].style = "background: green";
+			}	
+			function thirdButton(){
+				var ptext = document.getElementsByTagName('p');
+				var emtext = document.getElementsByTagName('em');
+				ptext[3].innerHTML += emtext[1].innerHTML;
+			}
+// Assignment 2
+			function hide(){
+				document.getElementById("me").style.display = "none";
+			}
+			function show(){
+				document.getElementById("me").style.display = "block"; 
+			}
+			function surprise(){
+				var elements = document.getElementsByClassName('surprise');	
+				for(var i=0; i<elements.length; i++) {
+					elements[i].style = "font-size: 20px;"
+				}  //could not figure out a better way than this
+			}
+// Assignment 3			
+			function showBorder(){
+				document.getElementById('carimage').style ="border: 5px solid black";
+			}
+			function hideBorder(){
+				document.getElementById('carimage').style ="border: 0px solid black";
+			}
+			function carfunction(){
+				var cartype = document.getElementById('mySelect').value;
+				var image = document.getElementById('carimage');
+				alert("You selected: "+cartype);
+				if (cartype == "Audi") {
+					image.src = "https://i.imgur.com/Jam1YTn.jpg";
+				}
+				else if (cartype == "Mercedes") {
+					image.src = "https://imgur.com/dQw60ct.jpg";
+				}
+				else if (cartype == "Volvo") {
+					image.src = "https://imgur.com/RzvbKYU.jpg";
+				}
+				else if (cartype == "BMW") {
+					image.src = "https://imgur.com/dQw60ct.jpg";
+				}
+			}
+// Assignment 4
+			//Move button:
+			function changePosition(){
+					document.getElementById('carimage').style.positon = "relative";
+					document.getElementById('carimage').style.left = "-200px";
+					document.getElementById('carimage').style.top = "+500px";
+			}
+			//Animate button:
+			function animate(){
+				setInterval(function(){doMove();},1000);
+			}
+
+			function doMove(){
+				var image = document.getElementById('carimage');
+				image.position = "relative";
+				var left = parseInt(image.style.left);
+				image.style.left = (left+10)+'px';
+			}
+			//Fadeout button:
+			function fadeOut(){
+				setInterval(function(){doFadeOut();},1000);
+			}
+			function doFadeOut(){
+				var image = document.getElementById('carimage');
+				var opac = parseInt(image.style.opacity);
+				image.style.opac -= 0,5;
+			}
+			//Disappear button:
+			function remove(){
+				document.getElementById('carimage').style.display = "none";
+			}
+//Assignment 5:
+			function insertRows(){
+				// from <table id="data" class="display">
+				var table = document.getElementById("data");
+				//Add rows
+				var row = table.insertRow();
+				//add td elements to the new tr element
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				var cell3 = row.insertCell(2);
+				//values to the new fields from valueas already on the page
+				var name = document.getElementById('textfield').value;
+				var position = document.getElementById('textfield2').value;
+				var salary = document.getElementById('textfield3').value;
+				//new cell names
+				cell1.innerHTML = name;
+				cell2.innerHTML = position;
+				cell3.innerHTML = salary;
+			}
+		</script>	
 	</body>
 </html>
 
