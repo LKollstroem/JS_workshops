@@ -117,5 +117,31 @@
 		<input type="button" name="Fetch3" id="Fetch3c" value="Load Iltalehti Newsfeed" onclick="loadAndParseNews('http://www.iltalehti.fi/rss/uutiset.xml')">
 		<div id="newsfeed">
 		</div>
+		<script>
+		//Exercise one:	
+			function parseData(){
+                // look for <quote> and <author>
+                var quotes = document.getElementsByTagName('quote');
+                var authors = document.getElementsByTagName('author');
+				console.log (quotes[0].innerHTML);
+                console.log (authors[0].innerHTML);
+            }
+		//Exercise two:
+			function loadXMLFile(){
+				// Create AJAX object
+				var xmlhttp = new XMLHttpRequest();
+				// URL
+				xmlhttp.open("GET", "http://quotes.rest/qod.xml", true);
+				xmlhttp.send();
+				//ready state and OK file
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				 // where to put the info - in div id quotes
+						document.getElementById("quotes").innerHTML = xmlhttp.responseText;
+					}
+				}
+			}	
+				
+		</script>
 	</body>
 </html>

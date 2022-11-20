@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html style="position:absolute; left:150px; top:133px;" class="no-border">
+    <style>
+        body {background-color: powderblue;}
+        h1   {color: rgb(9, 9, 30);
+            font-family: Arial;}
+        html {color: rgb(9, 9, 30); font-family: Arial;} 
+        input, textarea {background-color: #D3D3D3;}
+        select {background-color: #D3D3D3;}
+        button {background-color: #D3D3D3;}
+        
+    </style>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Music API</title>
+	</head>
+	<body>
+		<h1>Music</h1>
+		<p onload="loadFile()">General description of the task
+			In this project we will use AJAX to fetch the data from the web. This time the data is not a static file, but rather a stream of data returned by a live server.
+			From a programmers point of view it makes no difference which data source is used, the process is the same:
+			
+			1. First we ask for the data (Ajax call) with onload"loadFile()"
+			2. Save the results into a variable and select what data we want to use - already chosen div.
+			3. Display the selected data and make it look nice
+			
+			Project will be published in GitHub and deployed to Netlify.
+			Comment every line of JavaScript code you write.
+			DO not use external libraries.
+			Use CSS-styles to style your page.
+			All event handlers should be added dynamically! no hard coded onclick -listeners! 
+			Only in pairs/individually, no groups
+			Projects are done in pairs / individually, no groups are allowed. This will keep you focused on development.
+			Return
+			The project work should be returned in GitHub and Netlify by deadline. Return GitHub linki in Canvas. 
+			Do not copy copy from internet or from someone else. Code will be checked against plagiarism.</p>
+
+		<p>2. Music Information APP utilizing Live JSON API from LiveFM 
+			Implement a web page, where the user can select different artists from a list shown in page
+			The page then shows the pictures and info of the albums of the artist
+			Display some other info as well (songs of the album etc.)
+			Create nice layout and style for the page
+			Extra points will be given for input field with custom search string
+			LiveFM API is at: https://www.programmableweb.com/api/lastfmLinks to an external site.
+			Some HINTS: Get API Key from page: https://www.last.fm/api/webauth Links to an external site.
+			and press the text "..apply for one.." to get API Account. When you create the API account for your 
+			self the application name is mandatory (callback URL and application homepage are not necessary to fill).
+			To get requests see the pages e.g. https://www.last.fm/api  Links to an external site.  
+			and select e.g. artist.getInfo Links to an external site.and you will get examples to search artists.</p>
+        
+		<br>
+        <br> 
+		<h3>Example: Request (parameters in bold):http://api.openweathermap.org/data/2.5/weather?q=Helsinki
+			&units=metric&mode=XML&APPID=ff64c247a136f706923d1ee0d55d71e2
+			Make note of the URL and the parameters after it are separated with 
+			& -sign
+			url: http://api.openweathermap.org/data/2.5/weather
+			parameters
+			q = City we are looking for
+			units= Metric / Imperial
+			mode = XML or JSON
+			APPID = developer key to prevent malicious activity</h3>
+
+			<h3>Request (parameters in bold):http://api.openweathermap.org/data/2.5/weather?q=Helsinki
+				&units=metric&mode=JSON&APPID=ff64c247a136f706923d1ee0d55d71e2
+				Response in JSON</h3>
+        <br> 
+        <br>
+        <form name="form1" id="form1">
+                <select name="default" id="product">
+                <option value="product">Choose product</option>
+                <option value="chair">Chair</option>
+                <option value="table">Table</option>
+                <option value="tent">Tent</option>
+                </select>
+
+            <br>
+            <br>
+            <div class="no-border" id="reserve-div">
+                <label>
+                Reserve amount:<br>
+                <input type="text" name="reserve" id="reserve" required>
+                </label>
+            </div>
+            <br>
+		<script>
+//First get the file: with the correct API address
+			function loadFile(){
+				// Create AJAX object
+				var xmlhttp = new XMLHttpRequest();
+				// URL
+				xmlhttp.open("GET", "http://quotes.rest/qod.xml", true);
+				xmlhttp.send();
+				//ready state and OK file
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				 // where to put the info in div id quotes?
+						document.getElementById("quotes").innerHTML = xmlhttp.responseText;
+					}
+				}
+			}	
+
+
+
+//SEcond make it look nice:
+
+
+xmlhttp.onreadystatechange=function() {
+if (xmlhttp.readyState==4 && xmlhttp.status==200){
+// Save the response data in a variable for easy processing
+var xmlDoc = xmlhttp.responseXML;  
+// Use getElementsByTagName to dig out quote-tags (note that it is an array!)
+var quotes =  xmlDoc.getElementsByTagName("quote");
+var firstQuote = quotes[0];
+var quoteText = firstQuote.innerHTML; 
+// Finally we will place the information on screen
+document.getElementById("myDiv").innerHTML= quote;
+}
+}
+//USE for loops 
+
+// See more on this at: http://www.w3schools.com/xml/dom_intro.asp
+
+// Use for-loops to iterate the array of quotes
+for (i = 0; i< allquotes.length; i++) {
+quote = allquotes[i].childNodes[0].nodeValue + "<br>";
+document.getElementById("myDiv").innerHTML += quote;
+}
+}
+// Value of the attributes can be retrieved using getAttribute() -function
+var element = xmldoc.getElementsByTagName('speed')
+var speed = element[0].getAttribute('value'); 
+
+xmlhttp.onreadystatechange=function() {
+if (xmlhttp.readyState==4 && xmlhttp.status==200){
+// Save the response data in a variable for easy processing
+var xmlDoc = xmlhttp.responseXML;  
+// Use getElementsByTagName to dig out quote-tags (note that it is an array!)
+var allquotes =  xmlDoc.getElementsByTagName("quote");
+}
+}
+// Use for-loops to iterate the array of quotes
+for (i = 0; i< allquotes.length; i++) {
+quote = allquotes[i].innerHTML + "<br>";
+document.getElementById("myDiv").innerHTML += quote;
+}
+
+//JSON
+//More on this at: http://www.w3schools.com/json/
+
+
+			function parseData(){
+                // look for <quote> and <author>
+                var quotes = document.getElementsByTagName('quote');
+                var authors = document.getElementsByTagName('author');
+              // If there were many tags, one could loop through it
+			  for (var i=0; i < x.length; i++){
+                x[i].innerHTML;
+                console.log(i);
+                }
+			}	
+        </script>
+    </body>
+</html>
+
